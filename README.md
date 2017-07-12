@@ -1,17 +1,15 @@
 # Eesti keele kõnesüntees (SAPI5)
-========
 
 #### Eesti keele HTS-kõnesüntees
-Copyright (c) 2015-16 [Eesti Keele Instituut](http://www.eki.ee/)
-Indrek Kiissel     
+Copyright (c) 2015-16 [Eesti Keele Instituut](http://www.eki.ee/)  
+Indrek Kiissel
 
 #### SAPI 5 liides
-Copyright (c) 2017 [Ränivägi OÜ](http://www.ränivägi.ee/)
+Copyright (c) 2017 [Ränivägi OÜ](http://www.ränivägi.ee/)  
 Rene Prillop
 	
 #### HTS Engine
-[HTS Working Group](http://hts-engine.sourceforge.net/)
-http://hts-engine.sourceforge.net/
+[HTS Working Group](http://hts-engine.sourceforge.net/)  
 
 All rights reserved.
 
@@ -45,8 +43,6 @@ POSSIBILITY OF SUCH DAMAGE.
 #### Morfoloogiline analüsaator ja ühestaja [vabamorf](https://github.com/Filosoft/vabamorf)
 Copyright (c) 2015, [Filosoft](http://www.filosoft.ee/)
 
-========
-
-Vajalik:
+## Vajalik:
 - Visual Studio 2017
 - WIX Toolkit 3.11 (installeri jaoks)
