@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+
+  <?if $(sys.BUILDARCH)=x64 ?>
+    <?define PlatformSourceFilesFolder='../sapi5et/x64_Release/' ?>
+    <?define PlatformProgramFilesFolder='ProgramFiles64Folder' ?>
+  <?else ?>
+    <?define PlatformSourceFilesFolder='../sapi5et/Win32_Release/' ?>
+    <?define PlatformProgramFilesFolder='ProgramFilesFolder' ?>
+  <?endif ?>
+
+  <Product Id="F57AD98C-C3D4-4B87-B726-E035F8CAE46C" UpgradeCode="c309b8c3-2270-42a5-a8a2-a77c0cc51dc1"
+           Name="Estonian TTS (SAPI5)" Language="1033" Version="1.0.0.0" Manufacturer="EKI">
+    <Package InstallerVersion="300" Compressed="yes"  InstallScope="perMachine"/>
+    <Media Id="1" Cabinet="media1.cab" EmbedCab="yes" />
+
+    <Condition Message="You need to be an administrator to install this product.">Privileged</Condition>
+
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="$(var.PlatformProgramFilesFolder)">
+        <Directory Id="INSTALLFOLDER" Name="Estonian TTS SAPI5">
+          <Component Id="Program" Guid="4ED6057C-9B71-46B4-9F32-36F99079D536">
+            <File Id='sapi5et.dll' Name='sapi5et.dll' DiskId='1' Source='$(var.PlatformSourceFilesFolder)sapi5et.dll' KeyPath='yes' SelfRegCost='1' />
+            <File Id='et.dct' Name='et.dct' DiskId='1' Source='../dct/et.dct' />
+            <File Id='et3.dct' Name='et3.dct' DiskId='1' Source='../dct/et3.dct' />
+          </Component>
+
+          <Component Id="VoiceTonu" Guid="76CB8246-13D9-4D22-AF91-9D269F29080C">
+            <File Id='tonu.htsvoice' Name='tonu.htsvoice' DiskId='1' Source='../dct/tonu.htsvoice' />
+          </Component>
+        </Directory>
+      </Directory>
+    </Directory>
+
+    <Feature Id="Complete" Level="1" Description="Complete">
+      <ComponentRef Id="Program" />
+      <ComponentRef Id="VoiceTonu" />
+    </Feature>
+
+    <UIRef Id="WixUI_Tiny" />
+
+    <Property Id="ARPPRODUCTICON" Value="MainExecutable" />
+
+  </Product>
+</Wix>
