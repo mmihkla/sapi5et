@@ -1,14 +1,14 @@
 # Eesti keele kõnesüntees (SAPI5)
 
-**Eesti keele HTS-kõnesüntees**
+**Eesti keele HTS-kõnesüntees**  
   Copyright (c) 2015-16 [Eesti Keele Instituut](http://www.eki.ee/)  
   Indrek Kiissel
 
-**SAPI 5 liides**
+**SAPI 5 liides**  
   Copyright (c) 2017 [Ränivägi OÜ](http://www.ränivägi.ee/)  
   Rene Prillop
 	
-**HTS Engine**
+**HTS Engine**  
   [HTS Working Group](http://hts-engine.sourceforge.net/)  
 
 All rights reserved.
@@ -40,7 +40,7 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
 OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 
-**Morfoloogiline analüsaator ja ühestaja [vabamorf](https://github.com/Filosoft/vabamorf)**
+**Morfoloogiline analüsaator ja ühestaja [vabamorf](https://github.com/Filosoft/vabamorf)**  
   Copyright (c) 2015 [Filosoft](http://www.filosoft.ee/)
 
 ## Vajalik
