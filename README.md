@@ -50,6 +50,7 @@ POSSIBILITY OF SUCH DAMAGE.
 ## Kompileerimiseks
 - Ava sapi5et.sln
 - Kompileeri sapi5et projekt
-- Kopeeri dct kataloogis olevad failid sapi5et.dll-iga samasse kataloogi
-- Registreeri valminud komponent sapi5et.dll administraatori õigustes (regsvr32 sapi5et.dll)
+- Kopeeri dct kataloogis olevad failid valminud sapi5et.dll-iga samasse kataloogi
+- Registreeri sapi5et.dll (regsvr32 sapi5et.dll)
+- Impordi tonu.reg fail
 - Installeri loomiseks kompileeri sapi5et projekti kompileerimise järel projekt setup

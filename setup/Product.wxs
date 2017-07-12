@@ -26,7 +26,22 @@
           </Component>
 
           <Component Id="VoiceTonu" Guid="76CB8246-13D9-4D22-AF91-9D269F29080C">
-            <File Id='tonu.htsvoice' Name='tonu.htsvoice' DiskId='1' Source='../dct/tonu.htsvoice' />
+            <File Id="tonu.htsvoice" Name="tonu.htsvoice" DiskId="1" Source="../dct/tonu.htsvoice" />
+            <RegistryKey Action="createAndRemoveOnUninstall" Root="HKLM" Key="SOFTWARE\Microsoft\Speech\Voices\Tokens\Tõnu - Estonian">
+              <RegistryValue Action="write" Type="string" Value="Tõnu - Estonian" />
+              <RegistryValue Action="write" Type="string" Name="CLSID" Value="{8900F658-092B-4ADF-92EC-8CE13593F0E1}" />
+              <RegistryValue Action="write" Type="string" Name="425" Value="Tõnu - Eesti" />
+              <RegistryValue Action="write" Type="string" Name="VoiceFile" Value="tonu.htsvoice" />
+              <RegistryValue Action="write" Type="string" Name="Language" Value="et-ee" />
+              <RegistryKey Action="create" Key="Attributes">
+                <RegistryValue Action="write" Type="string" Name="Language" Value="425" />
+                <RegistryValue Action="write" Type="string" Name="Gender" Value="Male" />
+                <RegistryValue Action="write" Type="string" Name="Age" Value="Adult" />
+                <RegistryValue Action="write" Type="string" Name="Name" Value="Tõnu" />
+                <RegistryValue Action="write" Type="string" Name="Vendor" Value="EKI" />
+                <RegistryValue Action="write" Type="string" Name="Version" Value="1.0" />
+              </RegistryKey>
+            </RegistryKey>
           </Component>
         </Directory>
       </Directory>
