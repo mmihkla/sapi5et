@@ -8,7 +8,7 @@
   Copyright (c) 2017 [Ränivägi OÜ](http://www.ränivägi.ee/)  
   Rene Prillop
 	
-**HTS Engine**  
+**The HMM-Based Speech Synthesis Engine HTS_Engine**  
   [HTS Working Group](http://hts-engine.sourceforge.net/)  
 
 All rights reserved.
@@ -45,7 +45,7 @@ POSSIBILITY OF SUCH DAMAGE.
 
 ## Vajalik
 - Visual Studio 2017
-- WIX Toolkit 3.11 (installeri jaoks)
+- WIX Toolkit 3.11 ja VS WIX plugin (installeri jaoks)
 
 ## Kompileerimiseks
 - Ava sapi5et.sln
