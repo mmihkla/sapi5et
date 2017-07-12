@@ -41,8 +41,15 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 
 #### Morfoloogiline analüsaator ja ühestaja [vabamorf](https://github.com/Filosoft/vabamorf)
-Copyright (c) 2015, [Filosoft](http://www.filosoft.ee/)
+Copyright (c) 2015 [Filosoft](http://www.filosoft.ee/)
 
-## Vajalik:
+## Vajalik
 - Visual Studio 2017
 - WIX Toolkit 3.11 (installeri jaoks)
+
+## Kompileerimiseks
+- Ava sapi5et.sln
+- Kompileeri sapi5et projekt
+- Kopeeri dct kataloogis olevad failid sapi5et.dll-iga samasse kataloogi
+- Registreeri valminud komponent sapi5et.dll administraatori õigustes (regsvr32 sapi5et.dll)
+- Installeri loomiseks kompileeri sapi5et projekti kompileerimise järel projekt setup

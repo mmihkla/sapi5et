@@ -1,3 +1,3 @@
-Copy here:
-	- all folders from Vabamorf/lib/ -- https://github.com/Filosoft/vabamorf
-	- all files from include/ and lib/ folders to hts/ folder -- http://hts-engine.sourceforge.net/ Version 1.10
+Kopeeri siia:
+	- kõik kataloogid Vabamorf/lib/ -- https://github.com/Filosoft/vabamorf
+	- kõik failid include/ ja lib/ kataloogidest hts/ kataloogi -- http://hts-engine.sourceforge.net/ Versioon 1.10
