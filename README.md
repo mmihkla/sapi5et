@@ -43,6 +43,10 @@ POSSIBILITY OF SUCH DAMAGE.
 **Morfoloogiline analüsaator ja ühestaja [vabamorf](https://github.com/Filosoft/vabamorf)**  
   Copyright (c) 2015 [Filosoft](http://www.filosoft.ee/)
 
+## Litsents
+Tarkvara on litsentseeritud LGPL alustel.  
+Software is licensed under LGPL.
+
 ## Vajalik
 - Visual Studio 2017
 - WIX Toolkit 3.11 ja VS WIX plugin (installeri jaoks)
@@ -53,4 +57,4 @@ POSSIBILITY OF SUCH DAMAGE.
 - Kopeeri dct kataloogis olevad failid valminud sapi5et.dll-iga samasse kataloogi
 - Registreeri sapi5et.dll (regsvr32 sapi5et.dll)
 - Impordi tonu.reg fail
-- Installeri loomiseks kompileeri sapi5et projekti kompileerimise järel projekt setup
+- Installeri loomiseks kompileeri projekt setup
