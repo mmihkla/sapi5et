@@ -10,11 +10,11 @@
   <?endif ?>
 
   <Product Id="F57AD98C-C3D4-4B87-B726-E035F8CAE46C" UpgradeCode="c309b8c3-2270-42a5-a8a2-a77c0cc51dc1"
-           Name="Estonian TTS (SAPI5)" Language="1033" Version="1.0.0.0" Manufacturer="EKI">
+           Name="Eesti keele kõnesüntees (SAPI5)" Language="1033" Version="1.0.0.0" Manufacturer="EKI">
     <Package InstallerVersion="300" Compressed="yes"  InstallScope="perMachine"/>
     <Media Id="1" Cabinet="media1.cab" EmbedCab="yes" />
 
-    <Condition Message="You need to be an administrator to install this product.">Privileged</Condition>
+    <Condition Message="Tarkvara installeerimisks on vaja administraatori õigusi.">Privileged</Condition>
 
     <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="$(var.PlatformProgramFilesFolder)">
