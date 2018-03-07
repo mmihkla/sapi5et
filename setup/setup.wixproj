@@ -6,7 +6,7 @@
     <ProductVersion>3.10</ProductVersion>
     <ProjectGuid>317ab9e0-c94f-4431-9371-6d4fd6775bea</ProjectGuid>
     <SchemaVersion>2.0</SchemaVersion>
-    <OutputName>setup</OutputName>
+    <OutputName>setup_$(Platform)</OutputName>
     <OutputType>Package</OutputType>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">

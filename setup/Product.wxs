@@ -1,31 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
 
-  <?if $(sys.BUILDARCH)=x64 ?>
-    <?define PlatformSourceFilesFolder='../sapi5et/x64_Release/' ?>
-    <?define PlatformProgramFilesFolder='ProgramFiles64Folder' ?>
-  <?else ?>
-    <?define PlatformSourceFilesFolder='../sapi5et/Win32_Release/' ?>
-    <?define PlatformProgramFilesFolder='ProgramFilesFolder' ?>
-  <?endif ?>
-
   <Product Id="F57AD98C-C3D4-4B87-B726-E035F8CAE46C" UpgradeCode="c309b8c3-2270-42a5-a8a2-a77c0cc51dc1"
-           Name="Eesti keele kõnesüntees (SAPI5)" Language="1033" Version="1.0.0.0" Manufacturer="EKI">
+           Name="Eesti keele kõnesüntees (SAPI5)" Language="1033" Version="1.0.0.1" Manufacturer="EKI">
     <Package InstallerVersion="300" Compressed="yes"  InstallScope="perMachine"/>
     <Media Id="1" Cabinet="media1.cab" EmbedCab="yes" />
 
     <Condition Message="Tarkvara installeerimisks on vaja administraatori õigusi.">Privileged</Condition>
 
     <Directory Id="TARGETDIR" Name="SourceDir">
-      <Directory Id="$(var.PlatformProgramFilesFolder)">
+      <Directory Id="ProgramFilesFolder">
         <Directory Id="INSTALLFOLDER" Name="Estonian TTS SAPI5">
-          <Component Id="Program" Guid="4ED6057C-9B71-46B4-9F32-36F99079D536">
-            <File Id='sapi5et.dll' Name='sapi5et.dll' DiskId='1' Source='$(var.PlatformSourceFilesFolder)sapi5et.dll' KeyPath='yes' SelfRegCost='1' />
+          <Component Id="Program" Guid="4ED6057C-9B71-46B4-9F32-36F99079D536" Win64="no">
+            <File Id='sapi5et.dll' Name='sapi5et.dll' DiskId='1' Source='../sapi5et/Win32_Release/sapi5et.dll' KeyPath='yes' SelfRegCost='1' />
             <File Id='et.dct' Name='et.dct' DiskId='1' Source='../dct/et.dct' />
             <File Id='et3.dct' Name='et3.dct' DiskId='1' Source='../dct/et3.dct' />
           </Component>
 
-          <Component Id="VoiceTonu" Guid="76CB8246-13D9-4D22-AF91-9D269F29080C">
+          <Component Id="VoiceTonu" Guid="76CB8246-13D9-4D22-AF91-9D269F29080C" Win64="no">
             <File Id="tonu.htsvoice" Name="tonu.htsvoice" DiskId="1" Source="../dct/tonu.htsvoice" />
             <RegistryKey Action="createAndRemoveOnUninstall" Root="HKLM" Key="SOFTWARE\Microsoft\Speech\Voices\Tokens\Tõnu - Estonian">
               <RegistryValue Action="write" Type="string" Value="Tõnu - Estonian" />
@@ -45,11 +37,47 @@
           </Component>
         </Directory>
       </Directory>
+
+      <?if $(sys.BUILDARCH)=x64 ?>
+      <Directory Id="ProgramFiles64Folder">
+        <Directory Id="INSTALLFOLDER64" Name="Estonian TTS SAPI5">
+          <Component Id="Program64" Guid="5F14C4C6-3057-4911-BA22-94F3C3075F54" Win64="yes">
+            <File Id='sapi5et.dll64' Name='sapi5et.dll' DiskId='1' Source='../sapi5et/x64_Release/sapi5et.dll' KeyPath='yes' SelfRegCost='1' />
+            <File Id='et.dct64' Name='et.dct' DiskId='1' Source='../dct/et.dct' />
+            <File Id='et3.dct64' Name='et3.dct' DiskId='1' Source='../dct/et3.dct' />
+          </Component>
+
+          <Component Id="VoiceTonu64" Guid="5CD4A1E7-649F-4DCE-AEB6-C6F8F909BE1E" Win64="yes">
+            <File Id="tonu.htsvoice64" Name="tonu.htsvoice" DiskId="1" Source="../dct/tonu.htsvoice" />
+            <RegistryKey Action="createAndRemoveOnUninstall" Root="HKLM" Key="SOFTWARE\Microsoft\Speech\Voices\Tokens\Tõnu - Estonian">
+              <RegistryValue Action="write" Type="string" Value="Tõnu - Estonian" />
+              <RegistryValue Action="write" Type="string" Name="CLSID" Value="{8900F658-092B-4ADF-92EC-8CE13593F0E1}" />
+              <RegistryValue Action="write" Type="string" Name="425" Value="Tõnu - Eesti" />
+              <RegistryValue Action="write" Type="string" Name="VoiceFile" Value="tonu.htsvoice" />
+              <RegistryValue Action="write" Type="string" Name="Language" Value="et-ee" />
+              <RegistryKey Action="create" Key="Attributes">
+                <RegistryValue Action="write" Type="string" Name="Language" Value="425" />
+                <RegistryValue Action="write" Type="string" Name="Gender" Value="Male" />
+                <RegistryValue Action="write" Type="string" Name="Age" Value="Adult" />
+                <RegistryValue Action="write" Type="string" Name="Name" Value="Tõnu" />
+                <RegistryValue Action="write" Type="string" Name="Vendor" Value="EKI" />
+                <RegistryValue Action="write" Type="string" Name="Version" Value="1.0" />
+              </RegistryKey>
+            </RegistryKey>
+          </Component>
+        </Directory>
+      </Directory>
+      <?endif ?>
     </Directory>
 
     <Feature Id="Complete" Level="1" Description="Complete">
       <ComponentRef Id="Program" />
       <ComponentRef Id="VoiceTonu" />
+
+      <?if $(sys.BUILDARCH)=x64 ?>
+      <ComponentRef Id="Program64" />
+      <ComponentRef Id="VoiceTonu64" />
+      <?endif ?>
     </Feature>
 
     <UIRef Id="WixUI_Tiny" />
