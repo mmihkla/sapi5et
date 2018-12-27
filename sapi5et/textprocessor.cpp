@@ -17,8 +17,8 @@ static bool TPIsWordPunctuation(const CFSWString &szPunctuation) {
 
 static bool TPIsPunctuation(wchar_t Char) {
 	return (FSStrChr(
-		L".,;:!?*+-\x2013\x2014\x2015/\\="
-		L"(){}[]<>\x00AB\x00BB"
+		L".,;:!?-\x2013\x2014\x2015"
+		L"(){}[]"
 		L"'\x2018\x2019\x201a\x2039\x203a" // Single quotes
 		L"\"\x201c\x201d\x201e\x00ab\x00bb" // Double quotes
 		, Char) != 0);
@@ -27,6 +27,8 @@ static bool TPIsPunctuation(wchar_t Char) {
 static bool TPIsSymbol(wchar_t Char) {
 	return (FSStrChr(
 		L"$\x20ac"
+		L"*+/|\\=_<>"
+		L"~`@#^&"
 		, Char) != 0);
 }
 
@@ -95,7 +97,7 @@ void CTextProcessor::CombineFragments(CFSClassArray<CFragment> &Fragments) const
 		}
 	}
 
-	// todo: maybe?
+	// TODO: maybe?
 	// Combine numbers
 	// Combine URLs
 	// ...
@@ -103,7 +105,7 @@ void CTextProcessor::CombineFragments(CFSClassArray<CFragment> &Fragments) const
 
 CFSWString CTextProcessor::GetCleanWord(const CFSWString &szText) const
 {
-	CFSString szResult = szText;
+	CFSWString szResult = szText;
 	szResult.Remove(FSWSTR('\x001F')); // Old soft hyph???
 	szResult.Remove(FSWSTR('\x00AD')); // Soft hyphen
 	return szResult;
@@ -150,7 +152,6 @@ AGAIN:
 		for (INTPTR ip2 = 0; bExplicitCapital && ip2 < Fragment.m_Morph.m_MorphInfo.GetSize(); ip2++) {
 			bExplicitCapital = (FSToUpper(Fragment.m_Morph.m_MorphInfo[ip2].m_szRoot[0]) != Fragment.m_Morph.m_MorphInfo[ip2].m_szRoot[0]);
 		}
-		if (!bExplicitCapital) continue;
 
 		// Optional sentence start punctuation
 		INTPTR ipTry;
@@ -194,11 +195,14 @@ AGAIN:
 		INTPTR ipLastWord = FindSpeakActionFragment(Fragments, ipPunctuation, -1);
 		if (ipLastWord == -1) continue;
 		if (Fragments[ipLastWord].m_eType != CFragment::TYPE_WORD) continue;
+		bool bExplicitPunctuation = true;
 		CMorphInfo InfoNumber; InfoNumber.m_cPOS = 'N'; // Number
 		CMorphInfo InfoAbbr; InfoAbbr.m_cPOS = 'Y'; // Abbrevation
 		if (Match(Fragments[ipLastWord], InfoNumber) != MATCH_NO || Match(Fragments[ipLastWord], InfoAbbr) != MATCH_NO) {
-			continue;
+			bExplicitPunctuation = false;
 		}
+
+		if (!(bExplicitCapital || bExplicitPunctuation)) continue;
 
 		// Found it...
 		CFSClassArray<CFragment> Sentence;
@@ -215,12 +219,13 @@ AGAIN:
 		Sentences.AddItem(Fragments);
 	}
 
-	for (INTPTR ip = 0; ip < Sentences.GetSize(); ip++) {
-		TRACE(L"--- %d\n", (int)ip);
-		for (INTPTR ip2 = 0; ip2 < Sentences[ip].GetSize(); ip2++) {
-			TRACE(L" %s - %d\n", Sentences[ip][ip2].m_szText, (int)Sentences[ip][ip2].m_eType);
-		}
-	}
+	//for (INTPTR ip = 0; ip < Sentences.GetSize(); ip++) {
+	//	TRACE(FSTSTR("--- %d\n"), (int)ip);
+	//	for (INTPTR ip2 = 0; ip2 < Sentences[ip].GetSize(); ip2++) {
+	//		TRACE(FSTSTR(" %s - %d\n"), (const TCHAR *)FSStrWtoT(Sentences[ip][ip2].m_szText), (int)Sentences[ip][ip2].m_eType);
+	//	}
+	//}
+
 	return Sentences;
 }
 

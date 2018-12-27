@@ -2,7 +2,6 @@
 
 #include "lib/proof/proof.h"
 
-
 class CFragment {
 public:
 	enum FRAGMENTTYPE {
@@ -31,7 +30,7 @@ public:
 		m_szText(szText)
 	{}
 
-	BOOL IsSpeakAction() const {
+	bool IsSpeakAction() const {
 		return (m_eAction == SPVA_Speak || m_eAction == SPVA_SpellOut);
 	}
 

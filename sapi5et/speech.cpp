@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "speech.h"
 
+// !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~£§«»ÄÕÖÜäõöüŠšŽžΑΒΓΔαβγδ–—―‘’‚“”„‹›€
+
 static bool IsWord(const CFSWString &str) {
 	if (str.GetLength() <= 1) return FALSE;
 	bool bVowel = FALSE;
@@ -337,6 +339,7 @@ void CSpeechEngine::CreateLabels(CFSClassArray<CFragment> &Sentence, CFSAStringA
 				pNextFragment->m_eType == CFragment::TYPE_PUNCTUATION &&
 				pNextFragment->m_szText.GetLength() == 1 &&
 				pNextFragment->m_szText.FindOneOf(L"\"\x201c\x201d\x201f\x00bb\x0022") >= 0 &&
+				ipFrag + 2 < SpeakFragments.GetSize() &&
 				SpeakFragments[ipFrag + 2]->m_eType == CFragment::TYPE_SPACE)
 			)
 		{

@@ -9,10 +9,6 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
     <Filter Include="lib">
       <UniqueIdentifier>{0fb85cc1-c60c-4cdf-8c6f-dbe27f983afb}</UniqueIdentifier>
     </Filter>
@@ -31,6 +27,9 @@
     <Filter Include="lib\etana">
       <UniqueIdentifier>{04f25842-9d44-4763-9f51-8f8ab55f3172}</UniqueIdentifier>
     </Filter>
+    <Filter Include="htssyn">
+      <UniqueIdentifier>{3cb35dc5-6f0c-4b20-b1eb-4482340ad650}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -45,9 +44,6 @@
     <ClInclude Include="fragment.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="audio.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="lib\hts\HTS_engine.h">
       <Filter>lib\hts</Filter>
     </ClInclude>
@@ -55,6 +51,9 @@
       <Filter>lib\hts</Filter>
     </ClInclude>
     <ClInclude Include="textprocessor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="speech.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -66,9 +65,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="engine.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="audio.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="lib\hts\HTS_audio.c">
@@ -397,6 +393,33 @@
     </ClCompile>
     <ClCompile Include="textprocessor.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="speech.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="htssyn\label.cpp">
+      <Filter>htssyn</Filter>
+    </ClCompile>
+    <ClCompile Include="htssyn\mappings.cpp">
+      <Filter>htssyn</Filter>
+    </ClCompile>
+    <ClCompile Include="htssyn\phone.cpp">
+      <Filter>htssyn</Filter>
+    </ClCompile>
+    <ClCompile Include="htssyn\phrase.cpp">
+      <Filter>htssyn</Filter>
+    </ClCompile>
+    <ClCompile Include="htssyn\syl.cpp">
+      <Filter>htssyn</Filter>
+    </ClCompile>
+    <ClCompile Include="htssyn\utils.cpp">
+      <Filter>htssyn</Filter>
+    </ClCompile>
+    <ClCompile Include="htssyn\utterance.cpp">
+      <Filter>htssyn</Filter>
+    </ClCompile>
+    <ClCompile Include="htssyn\word.cpp">
+      <Filter>htssyn</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

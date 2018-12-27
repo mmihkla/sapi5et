@@ -1,11 +1,9 @@
 #pragma once
 
-#include "lib/hts/HTS_engine.h"
-#include "lib/proof/proof.h"
-#include "fragment.h"
+#include "speech.h"
 #include "textprocessor.h"
 
-class CSapi5Engine : public ISpObjectWithToken, public ISpTTSEngine
+class CSapi5Engine : public CSpeechEngine, public ISpObjectWithToken, public ISpTTSEngine
 {
 public:
 	CSapi5Engine();
@@ -27,20 +25,24 @@ public:
 		GUID *pFormatId, WAVEFORMATEX **ppFormat);
 
 private:
-	CFSWString GetTokenStringValue(ISpObjectToken *pToken, const CFSString &szKey);
-	HRESULT OutputAudio(const CFragment &Fragment, ISpTTSEngineSite *pOutputSite, ULONG *pWritten);
+	CFSArray<CMorphInfo> Analyze(const CFSWString &szWord);
+
+	CFSWString GetTokenStringValue(ISpObjectToken *pToken, const CFSWString &szKey, const CFSWString &szDefault = L"");
+	DWORD GetTokenDWORDValue(ISpObjectToken *pToken, const CFSWString &szKey, DWORD dwDefault = 0);
+	double DWORDtoDouble(DWORD dwNumber) { return 0.01 * (INT32)(UINT32)dwNumber; }
+
 	HRESULT OutputSilence(const WAVEFORMATEX *pFormat, UINT uiMSec, ISpTTSEngineSite *pOutputSite, ULONG *pWritten);
 	BOOL GetEventInterest(ISpTTSEngineSite *pOutputSite, SPEVENTENUM EventId);
 
 	long m_lRefCount;
 	ISpObjectToken *m_pObjectToken;
 
-	BOOL m_bInitialized;
-	HTS_Engine m_HTS;
 	CTextProcessor m_TextProcessor;
-	CLinguistic m_Linguistic;
+	CSpeechLinguistic m_Linguistic;
 	CDisambiguator m_Disambiguator;
-	CFSMutex m_Mutex;
+	CFSMutex m_LinguisticMutex;
+
+	BOOL m_bInitialized;
 
 	int m_iBaseRate; // -10 ... 10
 	int m_iBaseVolume; // 0 ... 100%

@@ -1,12 +1,11 @@
 # Eesti keele kõnesüntees (SAPI5)
 
 **Eesti keele HTS-kõnesüntees**  
-  Copyright (c) 2015-16 [Eesti Keele Instituut](http://www.eki.ee/)  
-  Indrek Kiissel
+  Copyright (c) 2015-2016 [Eesti Keele Instituut](https://www.eki.ee/) ([GitHub](https://github.com/ikiissel/synthts_et))  
+  Copyright (c) 2018 [Ränivägi](https://www.ränivägi.ee/)  
 
 **SAPI 5 liides**  
-  Copyright (c) 2017 [Ränivägi OÜ](http://www.ränivägi.ee/)  
-  Rene Prillop
+  Copyright (c) 2017-2018 [Ränivägi](https://www.ränivägi.ee/)  
 	
 **The HMM-Based Speech Synthesis Engine HTS_Engine**  
   [HTS Working Group](http://hts-engine.sourceforge.net/)  
