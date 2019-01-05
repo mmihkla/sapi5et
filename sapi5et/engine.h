@@ -31,7 +31,6 @@ private:
 	DWORD GetTokenDWORDValue(ISpObjectToken *pToken, const CFSWString &szKey, DWORD dwDefault = 0);
 	double DWORDtoDouble(DWORD dwNumber) { return 0.01 * (INT32)(UINT32)dwNumber; }
 
-	HRESULT OutputSilence(const WAVEFORMATEX *pFormat, UINT uiMSec, ISpTTSEngineSite *pOutputSite, ULONG *pWritten);
 	BOOL GetEventInterest(ISpTTSEngineSite *pOutputSite, SPEVENTENUM EventId);
 
 	long m_lRefCount;

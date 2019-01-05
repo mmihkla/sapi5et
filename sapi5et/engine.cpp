@@ -106,6 +106,7 @@ STDMETHODIMP CSapi5Engine::SetObjectToken(ISpObjectToken *pToken)
 #define CHECK_ACTIONS { \
 	DWORD dwActions = pOutputSite->GetActions(); \
 	if (dwActions & SPVES_ABORT) { \
+		TRACE(L"CSapi5Engine::Speak ABORT\n"); \
 		return S_OK; \
 	} \
 	if (dwActions & SPVES_SKIP) { \
@@ -139,11 +140,13 @@ STDMETHODIMP CSapi5Engine::Speak(DWORD dwFlags, REFGUID formatId, const WAVEFORM
 	const SPVTEXTFRAG *pTextFrag, ISpTTSEngineSite *pOutputSite)
 {
 	// dwFlags not implemented, also seems to be missing from MS voices
-	// TODO: formatId, pFormat checks
 	TRACE(L"CSapi5Engine::Speak\n");
 	if (!m_bInitialized) return E_FAIL;
 
 	try {
+		if (!IsEqualGUID(formatId, SPDFID_WaveFormatEx)) return SPERR_UNSUPPORTED_FORMAT;
+		if (!pFormat || pFormat->nChannels != 1 || pFormat->wBitsPerSample != 16 || pFormat->nSamplesPerSec != 48000) return SPERR_UNSUPPORTED_FORMAT;
+
 		HRESULT hr;
 		ULONGLONG ullAudioOffset = 0;
 
@@ -309,16 +312,51 @@ STDMETHODIMP CSapi5Engine::Speak(DWORD dwFlags, REFGUID formatId, const WAVEFORM
 						hr = pOutputSite->AddEvents(&Event, 1);
 						if (FAILED(hr)) return hr;
 					}
-					ULONG ulWritten;
-					hr = pOutputSite->Write(Fragment.m_Audio.GetData(), Fragment.m_Audio.GetSize(), &ulWritten);
-					ullAudioOffset += ulWritten;
-					if (FAILED(hr)) return hr;
+
+					const BYTE *pAudioData = (const BYTE *)Fragment.m_Audio.GetData();
+					INTPTR ipDataLeft = Fragment.m_Audio.GetSize();
+					while (ipDataLeft > 0) {
+						CHECK_ACTIONS;
+
+						INTPTR ipWrite = FSMIN(ipDataLeft, 9600); // <= 100ms
+
+						ULONG ulWritten = 0;
+						hr = pOutputSite->Write(pAudioData, ipWrite, &ulWritten);
+						if (FAILED(hr)) return hr;
+
+						pAudioData += ulWritten;
+						ipDataLeft -= ulWritten;
+						ullAudioOffset += ulWritten;
+					}
 				} break;
 				case SPVA_Silence: {
-					ULONG ulWritten;
-					hr = OutputSilence(pFormat, Fragment.m_lParam, pOutputSite, &ulWritten);
-					ullAudioOffset += ulWritten;
-					if (FAILED(hr)) return hr;
+					INTPTR ipMSec = Fragment.m_lParam;
+					UINT uiSampleSize = pFormat->nChannels * pFormat->wBitsPerSample / 8;
+					INTPTR ip100 = pFormat->nSamplesPerSec / 10 * uiSampleSize; // 100ms
+
+					CFSData Silence;
+					Silence.SetSize(ip100);
+					memset(Silence.GetData(), 0, Silence.GetSize());
+
+					while (ipMSec > 0) {
+						CHECK_ACTIONS;
+
+						INTPTR ipWrite;
+						if (ipMSec >= 100) {
+							ipWrite = ip100;
+							ipMSec -= 100;
+						}
+						else {
+							ipWrite = pFormat->nSamplesPerSec * ipMSec / 1000 * uiSampleSize;
+							ipMSec = 0;
+						}
+
+						ULONG ulWritten = 0;
+						HRESULT hr = pOutputSite->Write(Silence.GetData(), ipWrite, &ulWritten);
+						if (FAILED(hr)) return hr;
+
+						ullAudioOffset += ulWritten;
+					}
 				} break;
 				case SPVA_Bookmark: {
 					if (GetEventInterest(pOutputSite, SPEI_TTS_BOOKMARK)) {
@@ -397,32 +435,4 @@ BOOL CSapi5Engine::GetEventInterest(ISpTTSEngineSite *pOutputSite, SPEVENTENUM E
 	HRESULT hr = pOutputSite->GetEventInterest(&ullEventInterest);
 	if (FAILED(hr)) return FALSE;
 	return !!(ullEventInterest & SPFEI(EventId));
-}
-
-HRESULT CSapi5Engine::OutputSilence(const WAVEFORMATEX *pFormat, UINT uiMSec, ISpTTSEngineSite *pOutputSite, ULONG *pWritten)
-{
-	*pWritten = 0;
-	UINT uiSampleSize = pFormat->nChannels * pFormat->wBitsPerSample / 8;
-	INTPTR ui100 = pFormat->nSamplesPerSec / 10 * uiSampleSize;
-
-	CFSData Data;
-	Data.SetSize(ui100);
-	memset(Data.GetData(), 0, Data.GetSize());
-
-	while (uiMSec > 0) {
-		ULONG ulWrite;
-		if (uiMSec >= 100) {
-			ulWrite = ui100;
-			uiMSec -= 100;
-		}
-		else {
-			ulWrite = pFormat->nSamplesPerSec * uiMSec / 1000 * uiSampleSize;
-			uiMSec = 0;
-		}
-		ULONG ulWritten = 0;
-		HRESULT hr = pOutputSite->Write(Data.GetData(), ulWrite, &ulWritten);
-		*pWritten += ulWritten;
-		if (FAILED(hr)) return hr;
-	}
-	return S_OK;
 }

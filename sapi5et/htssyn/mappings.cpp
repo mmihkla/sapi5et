@@ -124,7 +124,7 @@ namespace htssyn {
 		if (s == L"lo") return L"linnaosa";
 		if (s == L"lp") return L"lugupeetud";
 		if (s == L"lüh") return L"lühemalt";
-		if (s == L"M") return L"meestele";
+		//if (s == L"M") return L"meestele";
 		if (s == L"mag") return L"magister";
 		if (s == L"m.a.j") return L"meie ajaarvamise järgi";
 		if (s == L"min") return L"minut";
@@ -189,7 +189,7 @@ namespace htssyn {
 		if (s == L"tn") return L"tänav";
 		if (s == L"tr") return L"trükk";
 		if (s == L"Trt") return L"Tartu";
-		if (s == L"u") return L"umbes";
+		//if (s == L"u") return L"umbes";
 		if (s == L"ukj") return L"uue kalendri järgi";
 		if (s == L"UÜ") return L"usaldusühing";
 		if (s == L"v.a") return L"välja arvatud";

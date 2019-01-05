@@ -26,9 +26,9 @@ static bool TPIsPunctuation(wchar_t Char) {
 
 static bool TPIsSymbol(wchar_t Char) {
 	return (FSStrChr(
-		L"$\x20ac"
+		L"$€£¥¤¢"
 		L"*+/|\\=_<>"
-		L"~`@#^&"
+		L"~`@#^&§©°±¼½¾"
 		, Char) != 0);
 }
 
@@ -146,7 +146,6 @@ AGAIN:
 
 		if (ipFirstLetter == -1) continue; // Should never happen
 		if (FSToLower(Fragment.m_szText[ipFirstLetter]) == Fragment.m_szText[ipFirstLetter]) continue;
-		if (!Fragment.m_Morph.m_MorphInfo.GetSize()) continue;
 
 		bool bExplicitCapital = true;
 		for (INTPTR ip2 = 0; bExplicitCapital && ip2 < Fragment.m_Morph.m_MorphInfo.GetSize(); ip2++) {

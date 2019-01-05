@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "speech.h"
 
-// !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~£§«»ÄÕÖÜäõöüŠšŽžΑΒΓΔαβγδ–—―‘’‚“”„‹›€
+// !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~£¥¤¢§©°±¼½¾«»ÄÕÖÜäõöüŠšŽžΑΒΓΔαβγδ–—―‘’‚“”„‹›€
 
 static bool IsWord(const CFSWString &str) {
 	if (str.GetLength() <= 1) return FALSE;
@@ -135,9 +135,12 @@ static CFSWString GetCharacterText(wchar_t ch) {
 	case L'*': return L"tärn";
 	case L'@': return L"ätt";
 	case L'#': return L"trellid";
-	case L'€': return L"eurot";
 	case L'$': return L"dollarit";
+	case L'€': return L"eurot";
 	case L'£': return L"naela";
+	case L'¥': return L"jeeni";
+	case L'¤': return L"raha";
+	case L'¢': return L"senti";
 	case L'%': return L"protsenti";
 	case L'&': return L"änd";
 	case L'/': return L"kaldkriips";
@@ -148,6 +151,13 @@ static CFSWString GetCharacterText(wchar_t ch) {
 	case L'~': return L"tilde";
 	case L'`': return L"graavis";
 	case L'^': return L"katus";
+	case L'§': return L"paragrahv";
+	case L'©': return L"kopirait";
+	case L'°': return L"kraadi";
+	case L'±': return L"pluss miinus";
+	case L'¼': return L"veerand";
+	case L'½': return L"pool";
+	case L'¾': return L"kolmveerand";
 
 	case L'(': return L"avav sulg";
 	case L'[': return L"avav nurksulg";
@@ -158,7 +168,6 @@ static CFSWString GetCharacterText(wchar_t ch) {
 	case L'<': return L"väiksem kui";
 	case L'>': return L"suurem kui";
 
-	case L'§': return L"paragraaf";
 	case L'\'':
 	case L'\x2018':
 	case L'\x2019':
@@ -242,7 +251,6 @@ CSpeechEngine::~CSpeechEngine()
 void CSpeechEngine::OpenVoice(const CFSFileName &szVoice, const CVoiceSettings &Settings)
 {
 	CFSAutoLock AutoLock(&m_HTSMutex);
-	HTS_Engine_clear(&m_HTS);
 
 	CFSAString szaVoice = FSStrTtoA(szVoice);
 	char *pVoice = (char *)(const char *)szaVoice;
@@ -521,6 +529,8 @@ void CSpeechEngine::CreateAudio(CFSClassArray<CFragment> &Sentence, double fVolu
 			else sValue = (short)round(fValue);
 			pAudioBuf[ip] = sValue;
 		}
+
+		 HTS_Engine_refresh(&m_HTS);
 	}
 
 	// Split autio to fragments
